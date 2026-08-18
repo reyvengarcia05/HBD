@@ -557,6 +557,90 @@
       to{opacity:0;transform:translate(var(--x),var(--y)) scale(.1)}
     }
 
+
+    /* Video Jumpscare */
+    .jumpscare-overlay{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#000;
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .jumpscare-overlay.show{
+      opacity:1;
+      visibility:visible;
+      pointer-events:auto;
+      animation:jumpFlash .12s steps(2,end) 2;
+    }
+    .jumpscare-video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      background:#000;
+    }
+    .jumpscare-close{
+      position:absolute;
+      top:16px;
+      right:16px;
+      z-index:3;
+      border:1px solid rgba(255,255,255,.25);
+      background:rgba(0,0,0,.55);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:999px;
+      font:700 .78rem 'DM Sans',sans-serif;
+      cursor:pointer;
+      backdrop-filter:blur(8px);
+    }
+    .jumpscare-tip{
+      position:absolute;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      z-index:3;
+      padding:8px 13px;
+      border-radius:999px;
+      background:rgba(0,0,0,.42);
+      color:rgba(255,255,255,.82);
+      font-size:.72rem;
+      white-space:nowrap;
+      backdrop-filter:blur(7px);
+      pointer-events:none;
+    }
+    .final-jump-btn{
+      margin-top:28px;
+      border:1px solid rgba(216,180,254,.30);
+      color:#fff;
+      background:linear-gradient(135deg,#7c3aed,#c084fc);
+      padding:15px 22px;
+      border-radius:999px;
+      font:800 .98rem 'DM Sans',sans-serif;
+      cursor:pointer;
+      box-shadow:0 15px 35px rgba(124,58,237,.28);
+      transition:transform .2s ease,box-shadow .2s ease;
+    }
+    .final-jump-btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 20px 44px rgba(124,58,237,.38);
+    }
+    .final-jump-btn:active{transform:translateY(0)}
+    @keyframes jumpFlash{
+      0%,100%{filter:brightness(1)}
+      50%{filter:brightness(1.8)}
+    }
+    @media (max-width:760px){
+      .jumpscare-close{top:11px;right:11px}
+      .jumpscare-tip{bottom:12px;font-size:.67rem}
+      .final-jump-btn{width:100%;max-width:310px}
+    }
+
     @media (max-width:760px){
       .hero{min-height:90vh;padding-top:100px}
       .memory-wrap,
@@ -1128,9 +1212,27 @@ YOHOOO SUSPENDED!
           oh ano kala mo tapos na no eto pa sis
         </p>
         <div class="tiny-note">buksan mo to ang ganda ko</div>
+        <button class="final-jump-btn" id="finalJumpBtn">CLICK MO TO BE 👀</button>
       </div>
     </section>
   </main>
+
+  <!-- Put your scary video in the same folder and name it: jumpscare.mp4 -->
+  <div class="jumpscare-overlay" id="jumpscareOverlay" aria-hidden="true">
+    <video
+      class="jumpscare-video"
+      id="jumpscareVideo"
+      src="jumpscare.mp4"
+      preload="auto"
+      playsinline
+      webkit-playsinline
+    ></video>
+
+    <button class="jumpscare-close" id="jumpscareClose" aria-label="Close jumpscare">
+      Close ✕
+    </button>
+    <div class="jumpscare-tip">Tap anywhere / close when you're done 👀</div>
+  </div>
 
   <script>
     const intro = document.getElementById('intro');
@@ -1138,6 +1240,10 @@ YOHOOO SUSPENDED!
     const popup = document.getElementById('birthdayPopup');
     const startBtn = document.getElementById('startBtn');
     const confettiContainer = document.getElementById('confettiContainer');
+    const finalJumpBtn = document.getElementById('finalJumpBtn');
+    const jumpscareOverlay = document.getElementById('jumpscareOverlay');
+    const jumpscareVideo = document.getElementById('jumpscareVideo');
+    const jumpscareClose = document.getElementById('jumpscareClose');
 
     function burstConfetti(count = 100, duration = 4200){
       confettiContainer.innerHTML = '';
@@ -1260,11 +1366,54 @@ YOHOOO SUSPENDED!
       }, 180);
     }, {passive:true});
 
+    function openJumpscare(){
+      jumpscareOverlay.classList.add('show');
+      jumpscareOverlay.setAttribute('aria-hidden','false');
+      document.body.classList.add('locked');
+
+      try{
+        jumpscareVideo.currentTime = 0;
+        const playPromise = jumpscareVideo.play();
+        if(playPromise && typeof playPromise.catch === 'function'){
+          playPromise.catch(() => {
+            // The click that opened the overlay should normally allow playback.
+          });
+        }
+      }catch(error){}
+
+      burstConfetti(24, 1400);
+    }
+
+    function closeJumpscare(){
+      jumpscareVideo.pause();
+      jumpscareVideo.currentTime = 0;
+      jumpscareOverlay.classList.remove('show');
+      jumpscareOverlay.setAttribute('aria-hidden','true');
+      document.body.classList.remove('locked');
+    }
+
+    // Automatically close when the video finishes.
+    jumpscareVideo.addEventListener('ended', () => {
+      setTimeout(closeJumpscare, 350);
+    });
+
+    finalJumpBtn.addEventListener('click', openJumpscare);
+    jumpscareClose.addEventListener('click', closeJumpscare);
+
+    jumpscareOverlay.addEventListener('click', (event) => {
+      if(event.target === jumpscareOverlay){
+        closeJumpscare();
+      }
+    });
+
     // Keyboard accessibility
     document.addEventListener('keydown', e => {
       if(e.key === 'Escape' && popup.classList.contains('show')){
         popup.classList.remove('show');
         document.body.classList.remove('locked');
+      }
+      if(e.key === 'Escape' && jumpscareOverlay.classList.contains('show')){
+        closeJumpscare();
       }
     });
 
