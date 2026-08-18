@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#8b5cf6" />
-  <title>Happy Birthday, Randes! 💜</title>
+  <meta name="theme-color" content="#6d28d9" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Happy Birthday, Randes Gomez! 💜</title>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
@@ -579,6 +581,205 @@
         transition-duration:.01ms !important;
       }
     }
+  
+    /* Extra polish */
+    ::selection{background:rgba(192,132,252,.38);color:#fff}
+    ::-webkit-scrollbar{width:9px}
+    ::-webkit-scrollbar-track{background:#10051c}
+    ::-webkit-scrollbar-thumb{
+      background:linear-gradient(#7c3aed,#c084fc);
+      border-radius:999px;
+      border:2px solid #10051c;
+    }
+
+    .hero:before,
+    .hero:after{
+      content:"";
+      position:absolute;
+      pointer-events:none;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:50%;
+      filter:blur(.2px);
+    }
+    .hero:before{
+      width:520px;height:520px;
+      right:-250px;top:-210px;
+      box-shadow:0 0 80px rgba(139,92,246,.13);
+    }
+    .hero:after{
+      width:320px;height:320px;
+      left:-170px;bottom:-120px;
+      box-shadow:0 0 70px rgba(240,171,252,.10);
+    }
+
+    .letter:before{
+      content:"";
+      position:absolute;
+      left:24px;right:24px;top:18px;
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(216,180,254,.35),transparent);
+    }
+
+    .photo-card{
+      isolation:isolate;
+    }
+    .photo-card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius:27px;
+      padding:1px;
+      background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(192,132,252,.02),rgba(240,171,252,.14));
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      opacity:.8;
+      z-index:-1;
+    }
+
+    .photo-frame:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 25%,transparent 75%,rgba(10,2,18,.16));
+      pointer-events:none;
+    }
+
+    .photo-placeholder{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+    }
+
+    .ending-card:before{
+      content:"";
+      position:absolute;
+      width:300px;height:300px;
+      border-radius:50%;
+      right:-140px;top:-140px;
+      background:rgba(192,132,252,.11);
+      filter:blur(8px);
+    }
+
+    .floating-note{
+      position:fixed;
+      bottom:18px;
+      left:50%;
+      transform:translateX(-50%) translateY(20px);
+      z-index:80;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(19,7,31,.72);
+      backdrop-filter:blur(10px);
+      color:#e8ddf2;
+      font-size:.75rem;
+      opacity:0;
+      pointer-events:none;
+      transition:.45s ease;
+      box-shadow:0 12px 35px rgba(0,0,0,.22);
+      white-space:nowrap;
+    }
+    .floating-note.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    @media (max-width:760px){
+      body{font-size:15px}
+      .intro-card{
+        padding:28px 20px 24px;
+        border-radius:26px;
+      }
+      .gift{transform:scale(.9);margin-top:18px}
+      .intro-title{font-size:2.2rem}
+      .intro-sub{font-size:.93rem;line-height:1.6}
+      .open-btn{width:100%;padding:14px 20px}
+      .hero{
+        min-height:88svh;
+        padding:92px 18px 72px;
+      }
+      .hero h1{
+        font-size:clamp(2.65rem,16vw,4.6rem);
+        line-height:.95;
+      }
+      .hero p{
+        font-size:.96rem;
+        line-height:1.7;
+      }
+      .story{
+        width:min(100% - 26px, 900px);
+        padding-bottom:70px;
+      }
+      .letter{
+        padding:28px 18px 24px;
+        border-radius:23px;
+      }
+      .letter h2{font-size:2rem}
+      .letter p{
+        font-size:.95rem;
+        line-height:1.82;
+        margin-bottom:18px;
+      }
+      .photo-memory{
+        min-height:unset;
+        padding:45px 0;
+      }
+      .memory-wrap,
+      .memory-wrap.reverse{
+        grid-template-columns:1fr;
+        gap:20px;
+      }
+      .photo-card{
+        padding:10px;
+        border-radius:21px;
+      }
+      .photo-frame{border-radius:15px}
+      .memory-text{
+        padding:0 5px;
+      }
+      .memory-text h3{
+        font-size:1.8rem;
+        line-height:1.1;
+      }
+      .memory-text p{
+        font-size:.94rem;
+        line-height:1.72;
+      }
+      .quote{
+        font-size:1.25rem;
+        padding:0 10px;
+      }
+      .ending{
+        min-height:72svh;
+        padding:55px 15px 100px;
+      }
+      .ending-card{
+        padding:42px 20px;
+        border-radius:28px;
+      }
+      .ending-card h2{font-size:clamp(2.4rem,13vw,4.3rem)}
+      .ending-card p{font-size:.95rem;line-height:1.72}
+      .popup-card{
+        padding:31px 20px 25px;
+        border-radius:25px;
+      }
+      .popup-card h2{font-size:2.6rem}
+      .popup-card p{font-size:.94rem}
+      .popup-btn{width:100%}
+      .scroll-hint{bottom:16px}
+      .floating-note{bottom:12px;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
+    }
+
+    @media (max-width:380px){
+      .intro-title{font-size:2rem}
+      .hero h1{font-size:2.55rem}
+      .letter{padding-left:16px;padding-right:16px}
+      .memory-text h3{font-size:1.65rem}
+    }
+
   </style>
 </head>
 
@@ -638,6 +839,7 @@
   </div>
 
   <div class="confetti-container" id="confettiContainer"></div>
+<div class="floating-note" id="floatingNote">✨ A memory just appeared</div>
 
   <main>
     <section class="hero">
@@ -1046,31 +1248,54 @@
 
     // Reveal sections on scroll
     const revealSections = document.querySelectorAll('.photo-memory');
+    const floatingNote = document.getElementById('floatingNote');
+    let lastRevealed = 0;
+
+    function showFloatingNote(text){
+      floatingNote.textContent = text;
+      floatingNote.classList.add('show');
+      clearTimeout(showFloatingNote.timer);
+      showFloatingNote.timer = setTimeout(() => floatingNote.classList.remove('show'), 1200);
+    }
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if(entry.isIntersecting){
+        if(entry.isIntersecting && !entry.target.dataset.seen){
+          entry.target.dataset.seen = 'true';
           entry.target.querySelectorAll('.reveal-child').forEach(el => el.classList.add('visible'));
 
           const rect = entry.target.getBoundingClientRect();
           const x = Math.min(Math.max(rect.left + rect.width/2, 40), window.innerWidth - 40);
-          const y = Math.min(Math.max(rect.top + rect.height/2, 60), window.innerHeight - 60);
+          const y = Math.min(Math.max(rect.top + rect.height/2, 70), window.innerHeight - 70);
 
           celebrationBurst(x, y);
+          burstConfetti(window.innerWidth < 700 ? 28 : 44, 1800);
+
+          const number = entry.target.dataset.photo || '';
+          lastRevealed = Number(number) || lastRevealed;
+          showFloatingNote('✨ Memory ' + number + ' just appeared');
         }
       });
-    }, {threshold:0.27});
+    }, {
+      threshold: window.innerWidth < 700 ? 0.18 : 0.27,
+      rootMargin: '0px 0px -7% 0px'
+    });
 
     revealSections.forEach(section => observer.observe(section));
 
-    // Small dynamic sparkles while scrolling
+    // Gentle celebration while scrolling, with throttling for mobile performance.
     let scrollTimer;
+    let scrollBurstTimer = 0;
     window.addEventListener('scroll', () => {
       clearTimeout(scrollTimer);
       scrollTimer = setTimeout(() => {
-        const x = 25 + Math.random() * (window.innerWidth - 50);
-        const y = 90 + Math.random() * Math.max(100, window.innerHeight - 180);
-        celebrationBurst(x,y);
-      }, 120);
+        const x = 35 + Math.random() * Math.max(80, window.innerWidth - 70);
+        const y = 95 + Math.random() * Math.max(100, window.innerHeight - 190);
+        if(performance.now() - scrollBurstTimer > 850){
+          celebrationBurst(x,y);
+          scrollBurstTimer = performance.now();
+        }
+      }, 180);
     }, {passive:true});
 
     // Keyboard accessibility
@@ -1079,6 +1304,11 @@
         popup.classList.remove('show');
         document.body.classList.remove('locked');
       }
+    });
+
+    // Keep the file friendly for direct mobile opening.
+    window.addEventListener('load', () => {
+      document.body.classList.add('locked');
     });
   </script>
 </body>
